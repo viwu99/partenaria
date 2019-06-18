@@ -5,7 +5,7 @@ import os
 
 def pendus():
     pseudo = input('Entre ton pseudo : ')
-    listmot = ['a','a']
+    listmot = ['ordinateur']
     nbaléatoire = random.randint(0, len(listmot)-1)
     motpendu = listmot[nbaléatoire]
     motcaché = str()
@@ -29,13 +29,13 @@ def pendus():
                 ajoutpoint(pseudo, nbdevie)
                 exit()
         else:
-            print(f"Tu n'as pas trouvé de lettre il te reste {i} chance(s)")
             nbdevie -= 1
+            print(f"Tu n'as pas trouvé de lettre il te reste {nbdevie} chance(s)")
+
     print('Tu a perdu dommage')
     exit()
 
 def ajoutpoint(pseudo,point):
-    print('pseudo,points ', pseudo, point)
     #besoin d import os
     currentpath = os.path.dirname(os.path.abspath(__file__)) + "/"
     f = open(currentpath + 'datapendu.txt', "r") # f = fichier pendu
@@ -46,7 +46,6 @@ def ajoutpoint(pseudo,point):
     b = 0
     print('lpoint', lpoint)
     for i in range(0, len(lpseudo)):
-        print('hey')
         if pseudo == lpseudo[i]: #si le joueur existe deja
             lpoint[i] = int(lpoint[i]) + point
             b = 1
@@ -55,12 +54,13 @@ def ajoutpoint(pseudo,point):
         lpoint.append(point)
     lpp = list()  #liste pseudo points
     a = 0
-    print(len(pseudo))
     for i in range(0, len(pseudo)-1):  #crée la liste
         a = 1
-        print(i)
-        lpp.append(f'--{lpseudo[i]}--')
-        lpp.append(f'::{lpoint[i]}::')
+        try:
+            lpp.append(f'--{lpseudo[i]}--')
+            lpp.append(f'::{lpoint[i]}::')
+        except:
+            pass
 
     if a == 0: #premiere fois
         lpseudo.append(pseudo)
@@ -71,7 +71,6 @@ def ajoutpoint(pseudo,point):
     newdata = '\n'.join(lpp)
     f = open(currentpath + 'datapendu.txt', "w")  # f = fichier pendu
     f.write(newdata)
-    print('newdata : ',newdata, 'lpp',lpp)
 
 def main():
     pendus()
